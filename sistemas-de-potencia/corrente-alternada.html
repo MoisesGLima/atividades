@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Atividade de fixação sobre corrente alternada, valores eficazes, frequência e impedância.">
+<title>Exercícios de Fixação — Sistemas de Potência</title>
+<style>
+:root{
+  --navy:#12345a;--blue:#1f5f9d;--pale:#eef4fa;--paper:#fff;--ink:#182433;
+  --muted:#5b6876;--green:#176b3a;--green-bg:#e8f5ec;--red:#a52b2b;--red-bg:#fff0ef;
+  --border:#d5dee8;--gold:#f2c66d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#f2f5f8;color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#102d4e,#1d5487);color:white;padding:26px 18px}
+.header-inner{max-width:920px;margin:auto}
+h1{font-size:clamp(1.45rem,4vw,2rem);margin:0 0 6px}
+header p{margin:0;color:#e2edf8}
+main{max-width:920px;margin:24px auto;padding:0 14px 42px}
+.panel,.question-card,.report{background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:0 4px 18px #152d4610}
+.panel{padding:18px;margin-bottom:16px}
+.student-row{display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+.field{flex:1;min-width:220px}
+label{display:block;font-weight:650;margin-bottom:6px}
+input[type=text]{width:100%;padding:11px 12px;border:1px solid #aebdcd;border-radius:8px;font:inherit}
+.progress-line{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.92rem;margin:16px 0 7px}
+progress{width:100%;height:10px;accent-color:var(--blue)}
+.question-card{padding:clamp(17px,3vw,26px)}
+.q-kicker{color:var(--blue);font-weight:750;font-size:.9rem;text-transform:uppercase;letter-spacing:.04em}
+h2{font-size:1.25rem;line-height:1.35;margin:8px 0 18px}
+.options{display:grid;gap:10px}
+.option{display:flex;gap:12px;align-items:flex-start;padding:13px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s}
+.option:hover{border-color:var(--blue);background:#f7faff}
+.option input{margin-top:5px;accent-color:var(--blue);flex:0 0 auto}
+.option.selected{border-color:var(--blue);background:#edf5ff}
+.option.correct{border-color:#6ab58a;background:var(--green-bg)}
+.option.wrong{border-color:#dc8a86;background:var(--red-bg)}
+.option:has(input:disabled){cursor:default}
+.feedback{margin-top:16px;padding:13px 15px;border-radius:10px;display:none}
+.feedback.show{display:block}
+.feedback.good{background:var(--green-bg);border-left:4px solid var(--green)}
+.feedback.bad{background:#fff7e8;border-left:4px solid #c18418}
+.feedback strong{display:block;margin-bottom:4px}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px;flex-wrap:wrap}
+button{border:0;border-radius:9px;padding:11px 17px;font:inherit;font-weight:700;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{background:var(--blue);color:white}
+.secondary{background:#e8edf3;color:#23374b}
+.finish{background:var(--green);color:white}
+.note{font-size:.9rem;color:var(--muted);margin:10px 0 0}
+.report{padding:22px;margin-top:18px;display:none}
+.report.show{display:block}
+.score{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+.score-box{background:var(--pale);border-radius:10px;padding:12px 16px;min-width:110px}
+.score-box strong{display:block;font-size:1.55rem;color:var(--navy)}
+.result-item{border-top:1px solid var(--border);padding:15px 0}
+.result-item h3{font-size:1rem;margin:0 0 8px}
+.result-item p{margin:4px 0}
+.status{font-weight:750}
+.status.ok{color:var(--green)}.status.no{color:var(--red)}
+.report-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.small{font-size:.88rem;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:18px}
+@media(max-width:560px){header{padding:22px 16px}.student-row{display:block}.field{margin-bottom:10px}.nav button{flex:1}.report-actions button{width:100%}}
+@media print{header{background:#12345a!important;print-color-adjust:exact}.panel,.question-card{box-shadow:none}button{display:none!important}body{background:white}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <h1>Exercícios de Fixação — Sistemas de Potência</h1>
+  <p>Corrente alternada, valores eficazes, frequência e impedância</p>
+</div></header>
+<main>
+  <section class="panel" id="studentPanel">
+    <div class="student-row">
+      <div class="field">
+        <label for="studentName">Nome do aluno</label>
+        <input id="studentName" type="text" placeholder="Digite seu nome (opcional)" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="studentClass">Turma (opcional)</label>
+        <input id="studentClass" type="text" placeholder="Ex.: 2º ano">
+      </div>
+    </div>
+    <div class="progress-line"><span id="progressText">Questão 1 de 8</span><span id="answeredText">0 de 8 respondidas</span></div>
+    <progress id="progress" value="0" max="8"></progress>
+    <p class="note">Você pode navegar livremente entre as questões. As respostas ficam registradas neste navegador até a conclusão da atividade.</p>
+  </section>
+
+  <section class="question-card" id="questionCard" aria-live="polite">
+    <div class="q-kicker" id="qKicker">Questão 1</div>
+    <h2 id="qText"></h2>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+    <div class="nav">
+      <button class="secondary" id="prevBtn" type="button">← Anterior</button>
+      <button class="primary" id="nextBtn" type="button">Próxima →</button>
+    </div>
+    <p class="note">A explicação aparece após a seleção. Você pode alterar sua resposta antes de finalizar.</p>
+  </section>
+
+  <section class="report" id="report" aria-live="polite">
+    <h2>Relatório da atividade</h2>
+    <p id="reportStudent"></p>
+    <div class="score">
+      <div class="score-box"><span>Acertos</span><strong id="correctCount">0</strong></div>
+      <div class="score-box"><span>Erros</span><strong id="wrongCount">0</strong></div>
+      <div class="score-box"><span> aproveitamento</span><strong id="percent">0%</strong></div>
+    </div>
+    <p id="reportSummary"></p>
+    <div id="details"></div>
+    <div class="report-actions">
+      <button class="finish" id="whatsappBtn" type="button">Enviar relatório pelo WhatsApp</button>
+      <button class="secondary" id="reviewBtn" type="button">Revisar questões</button>
+      <button class="secondary" id="printBtn" type="button">Imprimir relatório</button>
+    </div>
+    <p class="small">O WhatsApp será aberto com o relatório preenchido. Confirme o envio na conversa que aparecer.</p>
+  </section>
+</main>
+<footer>Atividade didática — Sistemas de Potência</footer>
+
+<script>
+const questions = [
+{
+ text:"(Conceitual) Uma tomada fornece 127 V. Esse é o valor máximo que a tensão atinge? Explique e informe o valor máximo.",
+ options:[
+  "Sim. Os 127 V representam o maior valor instantâneo da tensão.",
+  "Não. 127 V é o valor eficaz; o valor de pico é aproximadamente 179,6 V.",
+  "Não. 127 V é o valor pico a pico; o valor de pico é 63,5 V.",
+  "Sim. Como a tensão alterna de polaridade, seu valor máximo é 127/√2 ≈ 89,8 V."
+ ],
+ answer:1,
+ explanation:"A tensão indicada nas tomadas é especificada pelo valor eficaz (RMS), não pelo pico. Para uma senoide, o pico é maior que o valor eficaz por um fator √2. Reavalie qual relação deve ser aplicada entre esses dois valores."
+},
+{
+ text:"(Conceitual) Um colega afirma: “uma corrente alternada de 10 A (eficaz) é mais fraca que uma corrente contínua de 10 A, pois a CA passa por zero a cada ciclo”. Analise a afirmação.",
+ options:[
+  "Correta. A passagem periódica por zero faz a corrente CA produzir sempre menos aquecimento.",
+  "Correta. A corrente contínua mantém o sentido e, por isso, sempre dissipa mais potência.",
+  "Incorreta. 10 A eficazes em CA produzem o mesmo aquecimento que 10 A em CC na mesma resistência.",
+  "Incorreta. A corrente CA de 10 A eficazes equivale a uma corrente contínua de aproximadamente 14,14 A."
+ ],
+ answer:2,
+ explanation:"O valor eficaz não é definido pelo valor instantâneo nem pela passagem por zero. Ele compara o efeito térmico por meio da média dos quadrados da corrente. Pense no significado físico da definição de RMS."
+},
+{
+ text:"Um osciloscópio mostra que um sinal senoidal tem período de 20 ms. Determine a frequência e a frequência angular.",
+ options:[
+  "f = 20 Hz e ω ≈ 125,7 rad/s.",
+  "f = 50 Hz e ω ≈ 314,2 rad/s.",
+  "f = 60 Hz e ω ≈ 377 rad/s.",
+  "f = 0,02 Hz e ω ≈ 0,126 rad/s."
+ ],
+ answer:1,
+ explanation:"Converta primeiro 20 ms para segundos e use a relação inversa entre período e frequência. Em seguida, obtenha a frequência angular multiplicando a frequência por 2π. Verifique a conversão de milissegundos."
+},
+{
+ text:"Uma tensão senoidal tem valor eficaz de 220 V. Calcule o valor de pico, o valor pico a pico e o valor médio de meio ciclo.",
+ options:[
+  "Vp ≈ 155,6 V; Vpp ≈ 311,1 V; Vmed ≈ 99,0 V.",
+  "Vp ≈ 311,1 V; Vpp ≈ 622,3 V; Vmed ≈ 198,1 V.",
+  "Vp = 220 V; Vpp = 440 V; Vmed ≈ 140,1 V.",
+  "Vp ≈ 440 V; Vpp ≈ 880 V; Vmed ≈ 280,1 V."
+ ],
+ answer:1,
+ explanation:"Para uma senoide, o valor eficaz é menor que o pico. Depois de encontrar o pico, o valor pico a pico corresponde à excursão total entre os extremos positivo e negativo. Para a média de meio ciclo, use 0,637 vezes o pico."
+},
+{
+ text:"A tensão em um circuito é v(t) = 311·sen(377·t) V. Determine (a) a frequência e o período; (b) o valor instantâneo em t = 5 ms; (c) o valor eficaz.",
+ options:[
+  "f ≈ 50 Hz; T = 20 ms; v(5 ms) ≈ 220 V; Vef ≈ 311 V.",
+  "f ≈ 60 Hz; T ≈ 16,67 ms; v(5 ms) ≈ 295,8 V; Vef ≈ 220 V.",
+  "f ≈ 60 Hz; T ≈ 16,67 ms; v(5 ms) ≈ 155,5 V; Vef ≈ 311 V.",
+  "f ≈ 377 Hz; T ≈ 2,65 ms; v(5 ms) ≈ −295,8 V; Vef ≈ 220 V."
+ ],
+ answer:1,
+ explanation:"Na expressão senoidal, 377 é a frequência angular ω, não a frequência em hertz. Converta 5 ms para segundos antes de calcular o argumento do seno. Para o valor eficaz, use a relação própria de uma senoide."
+},
+{
+ text:"Uma resistência de aquecimento de R = 22 Ω é ligada a 220 V eficazes. Determine (a) a corrente eficaz; (b) a corrente de pico; (c) a potência média dissipada; (d) a tensão contínua que produziria o mesmo aquecimento na mesma resistência.",
+ options:[
+  "Ief = 10 A; Ip ≈ 14,14 A; P = 2.200 W; VCC = 220 V.",
+  "Ief = 10 A; Ip = 10 A; P = 2.200 W; VCC ≈ 311 V.",
+  "Ief = 5 A; Ip ≈ 7,07 A; P = 1.100 W; VCC = 110 V.",
+  "Ief = 14,14 A; Ip = 20 A; P = 3.111 W; VCC = 311 V."
+ ],
+ answer:0,
+ explanation:"Em uma carga puramente resistiva, aplique a lei de Ohm usando valores eficazes. O pico da corrente é √2 vezes o valor eficaz. A potência média pode ser calculada com Vef·Ief; para o mesmo aquecimento em CC, compare os valores eficazes de tensão."
+},
+{
+ text:"Uma carga com R = 12 Ω e XL = 16 Ω é ligada a 220 V, 60 Hz (θv = 0). Determine (a) |Z|; (b) Ief e Ip; (c) φ e o tipo de carga; (d) o tempo de atraso da corrente; (e) a indutância L; (f) a expressão de i(t).",
+ options:[
+  "|Z| = 20 Ω; Ief = 11 A; Ip ≈ 15,56 A; φ ≈ +53,13° (indutiva); atraso ≈ 2,46 ms; L ≈ 42,4 mH; i(t) = 15,56·sen(377t − 53,13°) A.",
+  "|Z| = 28 Ω; Ief ≈ 7,86 A; Ip ≈ 11,12 A; φ ≈ +36,87° (indutiva); atraso ≈ 1,71 ms; L ≈ 42,4 mH; i(t) = 11,12·sen(377t − 36,87°) A.",
+  "|Z| = 20 Ω; Ief = 11 A; Ip ≈ 15,56 A; φ ≈ −53,13° (capacitiva); corrente adiantada ≈ 2,46 ms; L ≈ 42,4 mH; i(t) = 15,56·sen(377t + 53,13°) A.",
+  "|Z| = 4 Ω; Ief = 55 A; Ip ≈ 77,78 A; φ ≈ +53,13° (indutiva); atraso ≈ 2,46 ms; L ≈ 16 mH; i(t) = 77,78·sen(377t − 53,13°) A."
+ ],
+ answer:0,
+ explanation:"Como a carga é indutiva, a reatância é positiva e a corrente deve atrasar a tensão. Para o módulo, combine R e XL por soma quadrática, não por soma aritmética. Confira também que ω = 2π·60 e que o ângulo da corrente tem sinal oposto ao ângulo φ quando θv = 0."
+},
+{
+ text:"Um circuito com R = 6 Ω em série com um capacitor é ligado a 127 V, 60 Hz (θv = 0). A reatância do capacitor é 8 Ω. Determine (a) a capacitância; (b) Ief e Ip; (c) φ; (d) a expressão de i(t) e se a corrente está adiantada ou atrasada.",
+ options:[
+  "C ≈ 331,6 µF; Ief = 12,7 A; Ip ≈ 17,96 A; φ ≈ −53,13°; i(t) = 17,96·sen(377t + 53,13°) A; corrente adiantada.",
+  "C ≈ 331,6 µF; Ief = 12,7 A; Ip ≈ 17,96 A; φ ≈ +53,13°; i(t) = 17,96·sen(377t − 53,13°) A; corrente atrasada.",
+  "C ≈ 2.122 µF; Ief = 21,2 A; Ip ≈ 29,98 A; φ ≈ −36,87°; corrente adiantada.",
+  "C ≈ 42,2 µF; Ief = 7,95 A; Ip ≈ 11,24 A; φ ≈ +53,13°; corrente atrasada."
+ ],
+ answer:0,
+ explanation:"Em um circuito capacitivo, a reatância tem sinal negativo na impedância e a corrente fica adiantada. Para a capacitância, use a relação inversa entre XC, ω e C. Verifique o sinal de φ antes de determinar o ângulo da corrente."
+}
+];
+
+let current = 0;
+const answers = Array(questions.length).fill(null);
+const finalized = false;
+const $ = id => document.getElementById(id);
+
+function render(){
+ const q=questions[current];
+ $("qKicker").textContent=`Questão ${current+1} de ${questions.length}`;
+ $("qText").textContent=q.text;
+ $("options").innerHTML="";
+ q.options.forEach((option,index)=>{
+   const label=document.createElement("label");
+   label.className="option"+(answers[current]===index?" selected":"");
+   const radio=document.createElement("input");
+   radio.type="radio";radio.name="answer";radio.value=index;
+   radio.checked=answers[current]===index;
+   radio.addEventListener("change",()=>selectAnswer(index));
+   const span=document.createElement("span");span.textContent=`${String.fromCharCode(65+index)}) ${option}`;
+   label.append(radio,span);$("options").append(label);
+ });
+ $("prevBtn").disabled=current===0;
+ $("nextBtn").textContent=current===questions.length-1?"Verificar conclusão":"Próxima →";
+ $("progressText").textContent=`Questão ${current+1} de ${questions.length}`;
+ $("answeredText").textContent=`${answers.filter(a=>a!==null).length} de ${questions.length} respondidas`;
+ $("progress").value=answers.filter(a=>a!==null).length;
+ showFeedback();
+}
+function selectAnswer(index){
+ answers[current]=index;
+ render();
+}
+function showFeedback(){
+ const box=$("feedback"),answer=answers[current],q=questions[current];
+ box.className="feedback";
+ if(answer===null){box.innerHTML="";return}
+ if(answer===q.answer){
+   box.classList.add("show","good");
+   box.innerHTML="<strong>Resposta registrada.</strong> Você selecionou uma alternativa consistente com o conceito e os cálculos.";
+ }else{
+   box.classList.add("show","bad");
+   box.innerHTML=`<strong>Resposta registrada, mas há um equívoco.</strong>${q.explanation}`;
+ }
+}
+$("prevBtn").addEventListener("click",()=>{if(current>0){current--;render();}});
+$("nextBtn").addEventListener("click",()=>{
+ if(current<questions.length-1){current++;render();return;}
+ const missing=answers.findIndex(a=>a===null);
+ if(missing!==-1){
+   alert(`Ainda falta responder à questão ${missing+1}. Você será direcionado a ela.`);
+   current=missing;render();return;
+ }
+ makeReport();
+});
+function makeReport(){
+ const correct=answers.filter((a,i)=>a===questions[i].answer).length;
+ const wrong=questions.length-correct;
+ const pct=Math.round(correct/questions.length*100);
+ const name=$("studentName").value.trim()||"Não informado";
+ const turma=$("studentClass").value.trim();
+ $("reportStudent").textContent=`Aluno: ${name}${turma?` | Turma: ${turma}`:""}`;
+ $("correctCount").textContent=correct;
+ $("wrongCount").textContent=wrong;
+ $("percent").textContent=`${pct}%`;
+ $("reportSummary").textContent=`Resultado: ${correct} acerto(s) e ${wrong} erro(s), de um total de ${questions.length} questões.`;
+ $("details").innerHTML="";
+ questions.forEach((q,i)=>{
+   const ok=answers[i]===q.answer;
+   const item=document.createElement("article");item.className="result-item";
+   const h=document.createElement("h3");h.textContent=`Questão ${i+1} — `;
+   const status=document.createElement("span");status.className=`status ${ok?"ok":"no"}`;status.textContent=ok?"ACERTO":"ERRO";h.append(status);
+   const p1=document.createElement("p");p1.textContent=`Sua resposta: ${String.fromCharCode(65+answers[i])}) ${q.options[answers[i]]}`;
+   const p2=document.createElement("p");p2.textContent=`Gabarito: ${String.fromCharCode(65+q.answer)}) ${q.options[q.answer]}`;
+   const p3=document.createElement("p");p3.textContent=`Comentário: ${q.explanation}`;
+   item.append(h,p1,p2,p3);$("details").append(item);
+ });
+ $("questionCard").style.display="none";
+ $("studentPanel").style.display="none";
+ $("report").classList.add("show");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function reportText(){
+ const correct=answers.filter((a,i)=>a===questions[i].answer).length;
+ const name=$("studentName").value.trim()||"Não informado";
+ const turma=$("studentClass").value.trim();
+ let lines=[
+  "RELATÓRIO — EXERCÍCIOS DE FIXAÇÃO: SISTEMAS DE POTÊNCIA",
+  `Aluno: ${name}`,...(turma?[`Turma: ${turma}`]:[]),
+  `Resultado: ${correct}/${questions.length} acertos | ${questions.length-correct} erros | ${Math.round(correct/questions.length*100)}%`,
+  ""
+ ];
+ questions.forEach((q,i)=>{
+  const ok=answers[i]===q.answer;
+  lines.push(`Questão ${i+1}: ${ok?"ACERTO":"ERRO"}`);
+  lines.push(`Resposta do aluno: ${String.fromCharCode(65+answers[i])}) ${q.options[answers[i]]}`);
+  lines.push(`Resposta esperada: ${String.fromCharCode(65+q.answer)}) ${q.options[q.answer]}`);
+  lines.push("");
+ });
+ return lines.join("\n");
+}
+$("whatsappBtn").addEventListener("click",()=>{
+ const url="https://wa.me/5588998588731?text="+encodeURIComponent(reportText());
+ window.open(url,"_blank","noopener,noreferrer");
+});
+$("reviewBtn").addEventListener("click",()=>{
+ $("report").classList.remove("show");
+ $("report").style.display="none";
+ $("studentPanel").style.display="";
+ $("questionCard").style.display="";
+ current=0;render();window.scrollTo({top:0,behavior:"smooth"});
+});
+$("printBtn").addEventListener("click",()=>window.print());
+render();
+</script>
+</body>
+</html>
